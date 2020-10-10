@@ -4,16 +4,19 @@
   "description": "Create a React application that shows a list of songs with their information and metrics displayed. The app should have at least **2 pages (views)**:\r A landing page, and a page to show data coming from an API.",
   "main": "index.js",
   "scripts": {
-    "start": "(cd server && npm start); (cd client && npm start)"
+    "client": "cd client && npm start",
+    "server": "cd server && sam local start-api -p 8080",
+    "client:i": "cd client && npm i",
+    "server:i": "cd server/song-api && npm i",
+    "postinstall": "concurrently \"npm run server\" \"npm run client:i\" ",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ethan1027/tech_challenge.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ethan1027/tech_challenge/issues"
-  },
-  "homepage": "https://github.com/ethan1027/tech_challenge#readme"
+  "homepage": "https://github.com/ethan1027/tech_challenge#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
 }

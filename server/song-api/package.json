@@ -1,5 +1,5 @@
 {
-  "name": "iheart_nodejs_lambda",
+  "name": "server",
   "version": "1.0.0",
   "description": "hello world sample for NodeJS",
   "main": "app.js",
@@ -10,7 +10,6 @@
     "axios": "^0.18.0"
   },
   "scripts": {
-    "start": "sam local start-api -p 8080",
     "test": "mocha tests/unit/"
   },
   "devDependencies": {

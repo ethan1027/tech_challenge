@@ -3,9 +3,9 @@
 Create a React application that shows a list of songs with their information and metrics displayed. The app should have at least **2 pages (views)**:
 A landing page, and a page to show data coming from an API.
 
-- Everything should be written in JavaScript / Node.
+- [x] Everything should be written in JavaScript / Node.
 
-- Fork this repo and share the link when you are finished!
+- [x] Fork this repo and share the link when you are finished!
 
 ### UI Checklist
 
