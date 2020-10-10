@@ -1,0 +1,43 @@
+@keyframes Loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Loading-logo {
+    display: inline-block;
+    animation: Loading-spin 2s linear infinite;
+    font-size: 1.2rem;
+  }
+}
+
+th {
+  border: 3px solid #f4f6f8;
+	padding: 6px;
+	text-align: left;
+	color: #2f3133;
+	cursor: pointer;
+}
+
+td {
+  border: 1px solid #f4f6f8;
+	padding: 6px;
+	text-align: left;
+	color: #2f3133;
+	white-space: nowrap;
+}
+
+table {
+  border-spacing: 0px;
+	background: #fff;
+	box-shadow: 0 1px 0 0 rgba(22, 29, 37, 0.05);
+	margin-left: 20px;
+	margin-right: 20px;
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}

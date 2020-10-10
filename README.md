@@ -1,12 +1,13 @@
  # iHeartMedia - Music Lab - Code Challenge
 
 ## Submission Note
-### Project structure
-  - client: React app
-  - server: Node.js lambda app
 ### Run project locally
-In root dir, run `npm install` for first time to install dependencies of both sub-projects. `npm start` to start both sub-projects. \
-React runs on 3000, and Node.js lambda app runs on 8080. 
+In root dir, run `npm install` for first time to install the dependencies of both React & Node.js lambda. `npm start` to start both sub-projects. \
+### Project structure
+  - client: React app - `npm run client` (port: 3000)
+  - server: Node.js lambda app - `npm run server` (port: 8080)
+
+GraphQL is demonstrated through the "show compact view" button where Node.js lambda will query fewer columns.
 
 ## Requirements
 Create a React application that shows a list of songs with their information and metrics displayed. The app should have at least **2 pages (views)**:
@@ -44,4 +45,4 @@ SAM CLI instructions: https://docs.aws.amazon.com/serverless-application-model/l
 
 ## Bonus
 
-Use GraphQL and/or Typescript
+- [x] Use GraphQL and/or Typescript

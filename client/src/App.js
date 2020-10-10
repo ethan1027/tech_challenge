@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import './App.css';
 import Home from './page/Home';
 import MusicList from './page/MusicList';
+import iheart from './iheart.png';
 
 const StyledHr = styled.hr`
   height: 2px;
@@ -16,23 +17,21 @@ const StyledHr = styled.hr`
   color: #C0C0C0;
   background-color: #C0C0C0  
 `
-
-const InLi= styled.ul`
-  display: inline;
-`
-
 const App = () => {
   return (
     <div>
       <Router>
         <div>
             <ul>
-              <InLi>
+              <li>
+                <img src={iheart}></img>
+              </li>
+              <li>
                 <Link to="/">Home</Link>
-              </InLi>
-              <InLi>
+              </li>
+              <li>
                 <Link to="/music">Music</Link>
-              </InLi>
+              </li>
             </ul>
           <StyledHr/>
           <Switch>

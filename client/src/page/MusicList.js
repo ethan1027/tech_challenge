@@ -1,54 +1,44 @@
-import React, { useState, useEffect, setError } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import './MusicList.css';
 
-const SongTable = styled.table`
-	border-spacing: 0px;
-	background: #fff;
-	box-shadow: 0 1px 0 0 rgba(22, 29, 37, 0.05);
-	margin-left: 20px;
-	margin-right: 20px;
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-`;
-const Cell = styled.td`
-	border: 1px solid #f4f6f8;
-	padding: 6px;
-	text-align: left;
-	color: #2f3133;
-	white-space: nowrap;
-`;
-const HeaderCell = styled.th`
-	border: 3px solid #f4f6f8;
-	padding: 6px;
-	text-align: left;
-	color: #2f3133;
-	cursor: pointer;
-`;
-const ScrollContainer = styled.div`
-	overflow-x: auto;
-	height: 600px;
-	margin: 10px;
-	margin-right: 20px;
-`;
-
-const Title = styled.h2`
-	margin-left: 30px
-`;
+const buttonMsg1 = 'show full view';
+const buttonMsg2 = 'show compact view (GraphQL)';
 
 const MusicList = () => {
-	const [songs, setSongs] = useState([])
+	const [songs, setSongs] = useState([]);
 	const [ascendingOrder, setAscendingOrder] = useState(true);
-
+	const [isGql, setIsGql] = useState(false);
+	const [buttonMsg, setButtonMsg] = useState(buttonMsg2);
+	const [loading, setLoading] = useState(0);
+	
 	useEffect(() => {
-    axios.get("http://127.0.0.1:8080/songs")
+		loadTable();
+		setIsGql(!isGql);
+	}, []);
+	
+	const toggleGql = () => {
+		setIsGql(!isGql);
+		loadTable();
+		if (isGql) {
+			setButtonMsg(buttonMsg1);
+		} else {
+			setButtonMsg(buttonMsg2);
+		}
+	}
+
+	const loadTable = () => {
+		setLoading(0);
+		const url = isGql ? "http://127.0.0.1:8080/songs/compact" : "http://127.0.0.1:8080/songs"
+		axios.get(url)
       .then(res => {
 				console.log('call api')
 				setSongs(res.data);
-			});
-	}, []);
-
+				setLoading(1)
+			}, () => setLoading(-1))
+	}
+	
 	const sortByAttr = (attrName) => {
 		const sortedSongs = songs.sort((song1, song2) => {
 			const attr1 = song1[attrName];
@@ -67,36 +57,53 @@ const MusicList = () => {
 		setSongs([...sortedSongs]);
 	}
 	return (
-		<div>
-			<Title>Music List 🎵</Title>
-			<ScrollContainer>
-				<SongTable>
-					<thead>
-						<tr>
-							{songs.length > 0 && Object.entries(songs[0]).map(([attrName, _]) => {
-								return (
-									<HeaderCell key={attrName}><div onClick={() => sortByAttr(attrName)}>{attrName}</div></HeaderCell>
-								)
-							})}
-						</tr>
-					</thead>
-					<tbody>
-						{songs.map((song, songIndex) => {
-							return (
-								<tr key={songIndex}>
-									{Object.entries(song).map(([key, attr], attrIndex) => {
+		<Container>
+			<h2>Music List 🎵</h2>
+			{ loading == 0 ? <div>Loading... <span class="Loading-logo">⌛</span></div> :
+				<div>
+					<button onClick={toggleGql}>{buttonMsg}</button>
+					<ScrollContainer>
+						<table>
+							<thead>
+								<tr>
+									{songs.length > 0 && Object.entries(songs[0]).map(([attrName, _]) => {
 										return (
-											<Cell key={key + songIndex + attrIndex}>{attr}</Cell>
+											<th key={attrName}><div onClick={() => sortByAttr(attrName)}>{attrName}</div></th>
 										)
 									})}
 								</tr>
-							)
-						})}
-					</tbody>
-				</SongTable>
-			</ScrollContainer>
-		</div>
+							</thead>
+							<tbody>
+								{songs.map((song, songIndex) => {
+									return (
+										<tr key={songIndex}>
+											{Object.entries(song).map(([key, attr], attrIndex) => {
+												return (
+													<td key={key + songIndex + attrIndex}>{attr}</td>
+												)
+											})}
+										</tr>
+									)
+								})}
+							</tbody>
+						</table>
+					</ScrollContainer>
+				</div>
+			}
+		</Container>
 	);
 }
+
+// try styled-components
+const ScrollContainer = styled.div`
+	overflow-x: auto;
+	height: 600px;
+	margin-right: 20px;
+	margin-top: 20px;
+`;
+
+const Container = styled.div`
+	margin: 30px
+`;
 
 export default MusicList;

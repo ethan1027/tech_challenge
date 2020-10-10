@@ -1,5 +1,3 @@
-const axios = require('axios');
-// const url = 'http://checkip.amazonaws.com/';
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -12,10 +10,31 @@ const axios = require('axios');
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-let url = 'https://iheart-challenge-songs.s3.amazonaws.com/songData.json'
+const axios = require('axios');
+const {graphql, buildSchema } = require('graphql')
 
-exports.lambdaHandler = async () => {
+let url = 'https://iheart-challenge-songs.s3.amazonaws.com/songData.json'
+const schema = buildSchema(`
+	type Query {
+		songs: [Song]
+	}
+	type Song {
+		song: String
+		artist: String
+		playCount: Int
+	}
+`)
+exports.lambdaHandler = async (event) => {
 	const response = await axios.get(url);
+	let handlerOuput = response.data;
+	if (event.resource == '/songs/compact') {
+		console.log('use graphql compact results');
+		const root = {
+			songs: () => response.data 
+		}
+		const gqlRes = await graphql(schema, '{ songs { song artist playCount } }', root);
+		handlerOuput = gqlRes.data.songs;
+	}
 	return {
 		statusCode: 200,
 		headers: {
@@ -24,6 +43,6 @@ exports.lambdaHandler = async () => {
 			"Access-Control-Allow-Origin": "*",
 			"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
 		},
-		body: JSON.stringify(response.data)
+		body: JSON.stringify(handlerOuput)
 	}
 };
