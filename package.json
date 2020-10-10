@@ -1,0 +1,19 @@
+{
+  "name": "tech_challenge",
+  "version": "1.0.0",
+  "description": "Create a React application that shows a list of songs with their information and metrics displayed. The app should have at least **2 pages (views)**:\r A landing page, and a page to show data coming from an API.",
+  "main": "index.js",
+  "scripts": {
+    "start": "(cd server && npm start); (cd client && npm start)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethan1027/tech_challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethan1027/tech_challenge/issues"
+  },
+  "homepage": "https://github.com/ethan1027/tech_challenge#readme"
+}

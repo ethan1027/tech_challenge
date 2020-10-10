@@ -1,24 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import styled from 'styled-components';
 import './App.css';
+import Home from './page/Home';
+import MusicList from './page/MusicList';
+
+const StyledHr = styled.hr`
+  height: 2px;
+  border-width: 0;
+  color: #C0C0C0;
+  background-color: #C0C0C0  
+`
+
+const InLi= styled.ul`
+  display: inline;
+`
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <div>
+            <ul>
+              <InLi>
+                <Link to="/">Home</Link>
+              </InLi>
+              <InLi>
+                <Link to="/music">Music</Link>
+              </InLi>
+            </ul>
+          <StyledHr/>
+          <Switch>
+            <Route path="/music">
+              <MusicList/>
+            </Route>
+            <Route exact path="/">
+              <Home/>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     </div>
   );
 }
