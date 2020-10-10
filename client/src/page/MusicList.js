@@ -59,7 +59,7 @@ const MusicList = () => {
 	return (
 		<Container>
 			<h2>Music List 🎵</h2>
-			{ loading == 0 ? <div>Loading... <span class="Loading-logo">⌛</span></div> :
+			{ loading == 0 ? <div>Loading... <span className="Loading-logo">⌛</span></div> :
 				<div>
 					<button onClick={toggleGql}>{buttonMsg}</button>
 					<ScrollContainer>

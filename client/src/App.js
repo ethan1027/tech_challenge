@@ -11,12 +11,6 @@ import Home from './page/Home';
 import MusicList from './page/MusicList';
 import iheart from './iheart.png';
 
-const StyledHr = styled.hr`
-  height: 2px;
-  border-width: 0;
-  color: #C0C0C0;
-  background-color: #C0C0C0  
-`
 const App = () => {
   return (
     <div>
@@ -47,5 +41,12 @@ const App = () => {
     </div>
   );
 }
+
+const StyledHr = styled.hr`
+  height: 2px;
+  border-width: 0;
+  color: #C0C0C0;
+  background-color: #C0C0C0  
+`
 
 export default App;
