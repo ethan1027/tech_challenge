@@ -8,7 +8,7 @@
     "server": "cd server && sam local start-api -p 8080",
     "client:i": "cd client && npm i",
     "server:i": "cd server/song-api && npm i",
-    "postinstall": "concurrently \"npm run server\" \"npm run client:i\" ",
+    "postinstall": "concurrently \"npm run server:i\" \"npm run client:i\" ",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
