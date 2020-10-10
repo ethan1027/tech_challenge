@@ -15,11 +15,11 @@ const MusicList = () => {
 	
 	useEffect(() => {
 		loadTable();
-		setIsGql(!isGql);
+		setIsGql(i => !i);
 	}, []);
 	
 	const toggleGql = () => {
-		setIsGql(!isGql);
+		setIsGql(i => !i);
 		loadTable();
 		if (isGql) {
 			setButtonMsg(buttonMsg1);
@@ -30,7 +30,7 @@ const MusicList = () => {
 
 	const loadTable = () => {
 		setLoading(0);
-		const url = isGql ? "http://127.0.0.1:8080/songs/compact" : "http://127.0.0.1:8080/songs"
+		const url = isGql ? "http://localhost:8080/songs/compact" : "http://localhost:8080/songs"
 		axios.get(url)
       .then(res => {
 				console.log('call api')
@@ -53,13 +53,14 @@ const MusicList = () => {
 				return 0;
 			}
 		});
-		setAscendingOrder(!ascendingOrder)
+		setAscendingOrder(a => !a)
 		setSongs([...sortedSongs]);
 	}
 	return (
 		<Container>
 			<h2>Music List 🎵</h2>
-			{ loading == 0 ? <div>Loading... <span className="Loading-logo">⌛</span></div> :
+			{ loading === -1 ? <div> Something went wrong. Please try again 🌼 </div> : null }
+			{ loading === 0 ? <div>Loading... <span className="Loading-logo">⌛</span></div> :
 				<div>
 					<button onClick={toggleGql}>{buttonMsg}</button>
 					<ScrollContainer>
