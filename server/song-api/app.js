@@ -11,7 +11,7 @@
  * 
  */
 const axios = require('axios');
-const {graphql, buildSchema } = require('graphql')
+const { graphql, buildSchema } = require('graphql')
 
 let url = 'https://iheart-challenge-songs.s3.amazonaws.com/songData.json'
 const schema = buildSchema(`
@@ -25,24 +25,24 @@ const schema = buildSchema(`
 	}
 `)
 exports.lambdaHandler = async (event) => {
-	const response = await axios.get(url);
-	let handlerOuput = response.data;
-	if (event.resource == '/songs/compact') {
-		console.log('use graphql compact results');
-		const root = {
-			songs: () => response.data 
-		}
-		const gqlRes = await graphql(schema, '{ songs { song artist playCount } }', root);
-		handlerOuput = gqlRes.data.songs;
-	}
-	return {
-		statusCode: 200,
-		headers: {
-			"Content-Type" : "application/json",
-			"Access-Control-Allow-Headers" : "Content-Type",
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Methods": "*"
-		},
-		body: JSON.stringify(handlerOuput)
-	}
+  const response = await axios.get(url);
+  let handlerOuput = response.data;
+  if (event.resource == '/songs/compact') {
+    console.log('use graphql compact results');
+    const root = {
+      songs: () => response.data
+    }
+    const gqlRes = await graphql(schema, '{ songs { song artist playCount } }', root);
+    handlerOuput = gqlRes.data.songs;
+  }
+  return {
+    statusCode: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*"
+    },
+    body: JSON.stringify(handlerOuput)
+  }
 };
