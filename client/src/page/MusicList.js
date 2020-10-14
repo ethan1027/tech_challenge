@@ -14,6 +14,7 @@ const MusicList = () => {
 	const [loading, setLoading] = useState(0);
 	
 	useEffect(() => {
+		loadTable(0);
 		loadTable();
 		setIsGql(i => !i);
 	}, []);
@@ -28,7 +29,7 @@ const MusicList = () => {
 		}
 	}
 
-	const loadTable = () => {
+	const loadTable = (errorSignal = -1) => {
 		setLoading(0);
 		const url = isGql ? "http://localhost:8080/songs/compact" : "http://localhost:8080/songs"
 		axios.get(url)
@@ -36,7 +37,7 @@ const MusicList = () => {
 				console.log('call api')
 				setSongs(res.data);
 				setLoading(1)
-			}, () => setLoading(-1))
+			}, () => setLoading(errorSignal))
 	}
 	
 	const sortByAttr = (attrName) => {
